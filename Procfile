@@ -1,0 +1,1 @@
+web: gunicorn --pythonpath project main.wsgi:application --access-logfile -
