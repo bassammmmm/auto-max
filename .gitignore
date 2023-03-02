@@ -10,7 +10,6 @@ Icon
 venv/
 
 #Media Files
-**/media/users
 
 # Thumbnails
 ._*
