@@ -29,7 +29,7 @@ env.read_env()
 SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = bool(strtobool(env('DEBUG')))
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -86,22 +86,15 @@ WSGI_APPLICATION = 'main.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-if not bool(strtobool(env('PRODDBCONNECTION'))):
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
-        }
-    }
-else:
-    DATABASES = {
+
+DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': env('NAME'),
-            'USER': env('USER'),
-            'PASSWORD': env('PASSWORD'),
-            'HOST': env('HOST'),
-            'PORT': env('PORT')
+            'NAME': 'd1qdmmrboukuk',
+            'USER': 'kkbnrzvbdvgpeu',
+            'PASSWORD': '13bb7dfb15ac02498d5aa62894c5930d4634794edbe48f2734e953d570e383bf',
+            'HOST': 'ec2-63-32-248-14.eu-west-1.compute.amazonaws.com',
+            'PORT': '5432'
         }
     }
 
