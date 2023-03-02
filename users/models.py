@@ -25,7 +25,7 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     location = models.OneToOneField(Location, on_delete=models.SET_NULL, null=True)
     bio = models.CharField(max_length=255, blank=True)
-    photo = models.ImageField(upload_to = user_directory_path, null=True, default = 'default.png')
+    photo = models.ImageField(upload_to = user_directory_path, null=True, default = 'users/user_admin (8)/default.png')
     phone_number = models.CharField(max_length=11, blank=True)
 
     @property
