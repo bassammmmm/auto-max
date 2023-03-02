@@ -6,6 +6,7 @@ from django.contrib import messages
 from .forms import *
 from django.views import View
 from django.contrib.auth.decorators import login_required
+from django.core.mail import send_mail
 
 
 def login_view(request):
@@ -45,10 +46,15 @@ class RegisterView(View):
     def post(self,request):
         register_form = ExtendedUserCreationForm(request.POST)
         if register_form.is_valid():
+            subject = "You're great"
+            body = 'Thank you for being interested to test my project. Enjoy testing!'
+            sender = 'Bassam@gmail.com'
+            receiver = f'{register_form.cleaned_data["email"]}'
+            send_mail(subject, body, sender, [receiver])
             user = register_form.save()
             user.refresh_from_db()
             login(request, user)
-            messages.success(request, f'Your account has been created and logged in as {user.username} successfully!')
+            messages.success(request, f'Your account has been created and logged in as {user.username} successfully!, and also check your email!')
             return redirect('home')
         else:
             context = {
