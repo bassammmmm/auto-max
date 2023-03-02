@@ -50,7 +50,7 @@ class RegisterView(View):
             body = 'Thank you for being interested to test my project. Enjoy testing!'
             sender = 'Bassam@gmail.com'
             receiver = f'{register_form.cleaned_data["email"]}'
-            send_mail(subject, body, sender, [receiver])
+            send_mail(subject, body, sender, [receiver], fail_silently=True)
             user = register_form.save()
             user.refresh_from_db()
             login(request, user)
