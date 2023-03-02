@@ -45,10 +45,7 @@ class RegisterView(View):
     def post(self,request):
         register_form = ExtendedUserCreationForm(request.POST)
         if register_form.is_valid():
-            try: #We had to make this try except to ignore the DataError that comes from the Heroku Postgresql Database as a bug and it creates the user anyway.
-                user = register_form.save()
-            except Exception as e:
-                user = register_form.save()
+            user = register_form.save()
             user.refresh_from_db()
             login(request, user)
             messages.success(request, f'Your account has been created and logged in as {user.username} successfully!')

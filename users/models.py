@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
-from localflavor.us.models import USStateField, USZipCodeField
+from localflavor.us.models import USZipCodeField
+from . consts import *
 from .utils import user_directory_path
 from django.utils.safestring import mark_safe
 
@@ -8,9 +9,9 @@ from django.utils.safestring import mark_safe
 User._meta.get_field('email')._unique = True #This is to make the Email attribute unique in the User Model.
 
 class Location(models.Model):
-    address_1 = models.CharField(max_length=100)
+    address_1 = models.CharField(max_length=100, null = True, default = '')
     address_2 = models.CharField(max_length=100, blank = True)
-    state = USStateField(default='None')
+    state = models.CharField(max_length=100, choices=STATE_CHOICES)
     zip_code = USZipCodeField()
     
     def __str__(self):
