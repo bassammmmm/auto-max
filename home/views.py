@@ -39,7 +39,6 @@ class ListView(View):
         return render(request, 'views/list.html', context)
     
     def post(self, request):
-        try:
             listing_form = ListingForm(request.POST, request.FILES)
             location_form = LocationForm(request.POST)
             if listing_form.is_valid() and location_form.is_valid():
@@ -51,12 +50,12 @@ class ListView(View):
                 messages.info(request, 'List created successfully!')
                 return redirect('home')
             else:
-                raise Exception()
-        except Exception as e:
-            print(e)
-            messages.error(
-                request, 'Something went wrong while posting your listing, please make sure everything is correct.'
-            )
+                context = {
+                    'listing_form' : listing_form,
+                    'location_form' : location_form
+                }
+                return render(request, 'views/list.html', context)
+
             return redirect('home')
         
 class ListDetailsView(View):
