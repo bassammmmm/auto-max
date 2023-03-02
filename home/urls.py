@@ -9,5 +9,6 @@ urlpatterns = [
     path('listing-details/<str:id>', login_required(views.ListDetailsView.as_view()), name = 'listing'),
     path('profile/', login_required(views.ProfileView.as_view()), name = 'profile'),
     path('edit-listing/<str:id>', login_required(views.EditListingView.as_view()), name = 'edit'),
+    path('delete-listing/<str:id>', login_required(views.DeleteListingView.as_view()), name = 'delete'),
     path('like-listing/<str:id>', views.like_listing, name = 'like_listing'),
 ]

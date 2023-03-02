@@ -52,12 +52,17 @@
         </div>
         <table class="table table-hover">
             <tbody>
-                {% for listing in user_listings %}
-                <tr>
-                    <td><a href="{%url 'listing' listing.id%}">{{ listing.model }}</a></td>
-                    <td>{{listing.created_at }}</td>
-                </tr>
-                {% endfor %}
+                {% if user_listings %}
+                    {% for listing in user_listings %}
+                    <tr>
+                        <td><a href="{%url 'listing' listing.id%}">{{ listing.model }}</a></td>
+                        <td>{{listing.created_at }}</td>
+                    </tr>
+                    {% endfor %}
+                {% else %}
+                    <h4>You have created no listings.</h4>
+                {% endif %}
+
             </tbody>
         </table>
     </div>
@@ -71,12 +76,17 @@
         </div>
         <table class="table table-hover">
             <tbody>
-                {% for liked_listing in user_liked_listings %}
-                <tr>
-                    <td>{{ liked_listing.listing.model }}</td>
-                    <td>{{ liked_listing.like_date }}</td>
-                </tr>
-                {% endfor %}
+                {% if user_liked_listings %}
+                    {% for liked_listing in user_liked_listings %}
+                    <tr>
+                        <td><a href="{%url 'listing' liked_listing.listing.id%}">{{ liked_listing.listing.model }}</a></td>
+                        <td>{{ liked_listing.date }}</td>
+                    </tr>
+                    {% endfor %}
+                {% else %}
+                    <h4>You have liked no listings.</h4>
+                {% endif %}
+
             </tbody>
         </table>
     </div>

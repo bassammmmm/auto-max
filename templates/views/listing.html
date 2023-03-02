@@ -77,10 +77,14 @@
                     </div>
                     
                 </div>
+                {% if listing.seller.user == request.user %}
                 <div class="btn-group">
-                    {% if listing.seller.user == request.user %}
-                    <a href="{%url 'edit' id=listing.id %}" type="button" class="btn btn-lg btn-outline-secondary">Edit my listing</a>
-                    {% endif %}
+                    <a href="{%url 'edit' listing.id %}" type="button" class="btn btn-lg btn-outline-secondary">Edit my listing</a>
+                </div>
+
+                <div class="btn-group">
+                    <a href="{%url 'delete' listing.id %}" type="button" class="btn btn-lg btn-outline-secondary">Delete my listing</a>
+                {% endif %}
                 </div>
             </div>
         </div>

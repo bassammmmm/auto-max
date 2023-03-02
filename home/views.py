@@ -79,12 +79,14 @@ class ProfileView(View):
         location_form = LocationForm(instance = current_user.profile.location)
         user_listings = Listing.objects.filter(seller_id = current_user.profile.id)
         user_display_photo = current_user.profile.photo
+        user_liked_listings = LikedListing.objects.filter(profile_id = current_user.profile.id)
         context = {
             'user_form' : user_form,
             'profile_form' : profile_form,
             'location_form' : location_form,
             'user_listings' : user_listings,
-            'user_photo' : user_display_photo
+            'user_photo' : user_display_photo,
+            'user_liked_listings' : user_liked_listings
         }
         return render(request, 'views/profile.html', context)
     
@@ -93,7 +95,7 @@ class ProfileView(View):
         user_form = UserForm(request.POST, instance = current_user)
         profile_form = ProfileForm(request.POST, request.FILES, instance = current_user.profile)
         location_form = LocationForm(request.POST, instance = current_user.profile.location)
-        user_listings = Listing.objects.filter(seller_id = current_user.profile.id)
+
         if user_form.is_valid() and profile_form.is_valid() and location_form.is_valid():
             user_form.save()
             profile_form.save()
@@ -101,13 +103,16 @@ class ProfileView(View):
             messages.success(request, 'Profile updated successfully.')
             return redirect('profile')
         else:
+            user_listings = Listing.objects.filter(seller_id = current_user.profile.id)
             user_display_photo = current_user.profile.photo
+            user_liked_listings = LikedListing.objects.filter(profile_id = current_user.profile.id)
             context = {
                 'user_form' : user_form,
                 'profile_form' : profile_form,
                 'location_form' : location_form,
                 'user_listings' : user_listings,
-                'user_photo' : user_display_photo
+                'user_photo' : user_display_photo,
+                'user_liked_listings' : user_liked_listings
 
             }
             return render(request, 'views/profile.html', context)
@@ -143,7 +148,15 @@ class EditListingView(View):
         except Exception as e:
             messages.error(request, 'Something went wrong.')
             return redirect('home')
-        
+    
+    
+class DeleteListingView(View):
+    def get(self, request, id):
+        user_listing = get_object_or_404(Listing, id = id, seller_id = request.user.profile.id)
+        user_listing.delete()
+        messages.success(request, 'Listing deleted successfully!')
+        return redirect('home')
+
 def like_listing(request, id):
         listing = get_object_or_404(Listing, id=id)
         current_user = request.user

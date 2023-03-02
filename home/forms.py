@@ -4,7 +4,6 @@ from users.models import Location, Profile
 from django.contrib.auth.models import User
 from localflavor.us.forms import USStateField, USZipCodeField
 class ListingForm(forms.ModelForm):
-    model = forms.CharField(label='Model', required=False)
     class Meta:
         model = Listing
         fields = ['brand', 'model', 'vin', 'mileage','color',  'engine', 'transmission', 'description','image']
